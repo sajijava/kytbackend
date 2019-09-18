@@ -3,7 +3,7 @@
 const mysql = require('mysql');
 
 const node_chef_config = {
-  host: 'mysql-kytbackend-8050.nodechef.com:2419',
+  host: 'mysql-kytbackend-8050.nodechef.com',
   user: 'ncuser_13537',
   password: 'Mpafth59MSf82WtHnVTlaxpFBUXxuM',
   database: 'kytbackend',
