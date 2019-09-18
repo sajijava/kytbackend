@@ -2,6 +2,16 @@
 
 const mysql = require('mysql');
 
+const node_chef_config = {
+  host: 'mysql-kytbackend-8050.nodechef.com:2419',
+  user: 'ncuser_13537',
+  password: 'Mpafth59MSf82WtHnVTlaxpFBUXxuM',
+  database: 'kytbackend',
+  port:2419,
+  connectionLimit:10
+
+}
+
 const config = {
     host: 'localhost',
     user: 'root',
@@ -10,7 +20,7 @@ const config = {
     connectionLimit:10
 };
 
-const pool = mysql.createPool(config);
+const pool = mysql.createPool(node_chef_config);
 
 
 pool.getConnection((err, connection) => {
