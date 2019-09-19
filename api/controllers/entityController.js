@@ -19,7 +19,7 @@ function transformToEntity(result){
   return response;
 }
 exports.allEntities = function(req, res) {
-  dbpool.query('select * from entity limit 10',(error,result) => {
+  dbpool.query('SELECT * FROM ENTITY LIMIT 10',(error,result) => {
     if(error) throw error;
     res.json(transformToEntity(result));
   });
@@ -27,21 +27,21 @@ exports.allEntities = function(req, res) {
 
 
 exports.getEntity = function(req,res){
-  dbpool.query('select * from entity where entity_uid = ?',req.params.id, (error,result) => {
+  dbpool.query('SELECT * FROM ENTITY WHERE entity_uid = ?',req.params.id, (error,result) => {
     if(error) throw error;
     res.json(transformToEntity(result));
   });
 }
 
   exports.getEntityGeoRadius = function(req,res){
-    dbpool.query('select distinct e.*,l.*,r.distance  from entity e  '+
-    'join location l on e.entity_uid = l.entity_uid '+
-    'join ( SELECT location_uid, '+
+    dbpool.query('SELECT distinct e.*,l.*,r.distance  FROM ENTITY e  '+
+    'JOIN LOCATION l ON e.entity_uid = l.entity_uid '+
+    'JOIN ( SELECT location_uid, '+
           '( 3959 * acos ( cos ( radians(?) ) * cos( radians( LATITUDE ) ) * cos( radians( LONGITUDE ) - radians(?) ) + sin ( radians(?) ) * sin( radians( LATITUDE ) ) ) ) AS distance '+
-          'FROM geo_location '+
+          'FROM GEO_LOCATION '+
           'HAVING distance < ? '+
-          'ORDER BY distance ) r on r.location_uid = l.location_uid '+
-      'order by distance asc',
+          'ORDER BY distance ) r ON r.location_uid = l.location_uid '+
+      'ORDER BY distance asc',
     [req.params.lat,req.params.long,req.params.lat,req.params.distance], (error,result) => {
       if(error) throw error;
       res.json(transformToEntity(result));
@@ -59,7 +59,7 @@ What are the possible notifications types
 
 */
 exports.dailyNotifications = function(req, res){
-  dbpool.query('select * from notifications where valid = TRUE order by created_ts',
+  dbpool.query('SELECT * FROM NOTIFICATIONS WHERE valid = TRUE ORDER BY created_ts',
    (error,result) => {
     if(error) throw error;
     let response = []
