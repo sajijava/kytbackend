@@ -63,7 +63,10 @@ exports.dailyNotifications = function(req, res){
    (error,result) => {
     if(error) throw error;
     let response = []
+    console.log("Query Results")
+    console.log(len(result))
     result.forEach(function(x){ response.push(new Notifications(x['ENTITY_UID'],x['TYPE'],x['TEXT'])); })
+    console.log(response)
     res.json(response);
 
   });
