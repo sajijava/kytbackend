@@ -13,6 +13,11 @@ module.exports = (app,db) => {
 
   app.route('/api/dailynotifications').get(authController.validateJwtToken,entityController.dailyNotifications);
 
+  app.route('/api/operatingtime/:lid').get(authController.validateJwtToken,entityController.getOperatingTimes);
+  app.route('/api/categories/:eid').get(authController.validateJwtToken,entityController.getCategories);
+  app.route('/api/details/:eid').get(authController.validateJwtToken,entityController.getAdditional);
+
+
   app.route('/api/auth/login').post(
               [
                 authController.validateUserCredentials,

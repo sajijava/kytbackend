@@ -1,15 +1,11 @@
 'use strict';
 
 var Entity = require('../../models/EntityModel')
+var EntityAddition = require('../../models/EntityAdditionModel')
+var Category = require('../../models/CategoryModel')
+var OperatingTime = require('../../models/OperatingTimeModel')
 var Notifications = require('../../models/NotificationsModel')
 const dbpool  = require('../models/db')
-
-
-
-
-
-
-
 
 function transformToEntity(result){
   let response = []
@@ -30,6 +26,37 @@ exports.getEntity = function(req,res){
   dbpool.query('SELECT * FROM ENTITY WHERE entity_uid = ?',req.params.id, (error,result) => {
     if(error) throw error;
     res.json(transformToEntity(result));
+  });
+}
+
+exports.getOperatingTimes = function(req,res){
+  dbpool.query('SELECT * FROM OPERATING_TIME WHERE LOCATION_UID= ?',req.params.lid, (error,result) => {
+    if(error) throw error;
+    let response = []
+    if(result instanceof Array){
+      result.forEach(function(x){ response.push(new OperatingTime(x)); })
+    }
+    res.json(response);
+  });
+}
+exports.getCategories = function(req,res){
+  dbpool.query('SELECT * FROM CATEGORIES WHERE ENTITY_UID= ?',req.params.eid, (error,result) => {
+    if(error) throw error;
+    let response = []
+    if(result instanceof Array){
+      result.forEach(function(x){ response.push(new Category(x)); })
+    }
+    res.json(response);
+  });
+}
+exports.getAdditional = function(req,res){
+  dbpool.query('SELECT * FROM ENTITY_ADDITION WHERE ENTITY_UID= ?',req.params.eid, (error,result) => {
+    if(error) throw error;
+    let response = []
+    if(result instanceof Array){
+      result.forEach(function(x){ response.push(new EntityAddition(x)); })
+    }
+    res.json(response);
   });
 }
 
