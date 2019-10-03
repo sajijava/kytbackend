@@ -40,6 +40,7 @@ exports.getOperatingTimes = function(req,res){
   });
 }
 exports.getCategories = function(req,res){
+  console.log(req.params.eid)
   dbpool.query('SELECT * FROM CATEGORIES WHERE ENTITY_UID= ?',req.params.eid, (error,result) => {
     if(error) throw error;
     let response = []
